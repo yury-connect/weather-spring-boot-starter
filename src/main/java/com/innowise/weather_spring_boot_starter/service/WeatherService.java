@@ -6,17 +6,13 @@ import com.github.prominence.openweathermap.api.model.Temperature;
 import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequester;
 import com.github.prominence.openweathermap.api.request.weather.single.SingleResultCurrentWeatherRequestTerminator;
 
-// Именно этот класс мы будем использовать в клиентском приложении
-// для получения информации по погоде
+// Именно этот класс мы будем использовать в клиентском приложении для получения информации по погоде
 public class WeatherService {
-    /**
-     * Название города, для которого мы будем получать информацию по погоде.
-     */
+
+    // Название города, для которого мы будем получать информацию по погоде.
     private final String defaultCity;
 
-    /**
-     * OpenWeatherMap клиент из библиотеки `openweathermap-api`.
-     */
+    // OpenWeatherMap клиент из библиотеки `openweathermap-api`.
     private final OpenWeatherMapClient client;
 
     public WeatherService(String defaultCity, OpenWeatherMapClient client) {
