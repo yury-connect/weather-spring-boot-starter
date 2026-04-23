@@ -1,6 +1,7 @@
 package com.innowise.weather_spring_boot_starter.service;
 
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
+import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.Temperature;
 import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequester;
@@ -30,6 +31,7 @@ public class WeatherService {
         SingleResultCurrentWeatherRequestTerminator terminator = requester.single()
                 .byCityName(defaultCity)
                 .unitSystem(UnitSystem.METRIC) // позволяет получать замеры в Цельсиях
+                .language(Language.RUSSIAN)
                 .retrieve();
 
         Temperature temperature = terminator.asJava().getTemperature();
