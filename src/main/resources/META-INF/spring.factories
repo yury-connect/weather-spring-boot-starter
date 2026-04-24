@@ -1,1 +1,2 @@
+# spring.factories
 org.springframework.boot.env.EnvironmentPostProcessor=com.innowise.weather_spring_boot_starter.config.EnvPostProcessor
