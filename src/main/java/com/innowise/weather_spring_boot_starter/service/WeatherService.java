@@ -3,39 +3,53 @@ package com.innowise.weather_spring_boot_starter.service;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.model.Temperature;
-import com.github.prominence.openweathermap.api.request.weather.CurrentWeatherRequester;
-import com.github.prominence.openweathermap.api.request.weather.single.SingleResultCurrentWeatherRequestTerminator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-// Именно этот класс мы будем использовать в клиентском приложении для получения информации по погоде
 public class WeatherService {
 
-    // Название города, для которого мы будем получать информацию по погоде.
+    private static final Logger log = LoggerFactory.getLogger(WeatherService.class);
     private final String defaultCity;
-
-    // OpenWeatherMap клиент из библиотеки `openweathermap-api`.
     private final OpenWeatherMapClient client;
 
     public WeatherService(String defaultCity, OpenWeatherMapClient client) {
         this.defaultCity = defaultCity;
         this.client = client;
+        log.info("WeatherService initialized for city: {}", defaultCity);
     }
 
     /**
      * Получить текстовое описание погоды для выбранного города.
-     * @return строка с описанием текущей погоды
+     * @return строка с описанием текущей погоды, или сообщение об ошибке
      */
     public String getTemperature() {
-        CurrentWeatherRequester requester = client.currentWeather();
+        return getTemperatureForCity(defaultCity);
+    }
 
-        SingleResultCurrentWeatherRequestTerminator terminator = requester.single()
-                .byCityName(defaultCity)
-                .unitSystem(UnitSystem.METRIC) // позволяет получать замеры в Цельсиях
-                .language(Language.RUSSIAN)
-                .retrieve();
+    /**
+     * Получить погоду для указанного города (преимущество - можно переиспользовать бин)
+     */
+    public String getTemperatureForCity(String cityName) {
+        try {
+            log.debug("Fetching weather for city: {}", cityName);
 
-        Temperature temperature = terminator.asJava().getTemperature();
+            var temperature = client.currentWeather()
+                    .single()
+                    .byCityName(cityName)
+                    .unitSystem(UnitSystem.METRIC)
+                    .language(Language.RUSSIAN)
+                    .retrieve()
+                    .asJava()
+                    .getTemperature();
 
-        return temperature.toString();
+            String result = temperature.toString();
+            log.info("Weather retrieved for {}: {}", cityName, result);
+            return result;
+
+        } catch (Exception e) {
+            log.error("Failed to get weather for city: {}", cityName, e);
+            return String.format("Не удалось получить погоду для города %s: %s",
+                    cityName, e.getMessage());
+        }
     }
 }

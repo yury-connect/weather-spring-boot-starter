@@ -1,37 +1,39 @@
 package com.innowise.weather_spring_boot_starter.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.boot.env.YamlPropertySourceLoader;
 import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
 
+@Slf4j
 public class EnvPostProcessor implements EnvironmentPostProcessor {
 
-    private final YamlPropertySourceLoader propertySourceLoader;  // no usages
-
-    public EnvPostProcessor() {
-        // no usages
-        propertySourceLoader = new YamlPropertySourceLoader(); // Yaml..Loader зачитает для нас конфуций
-    }
+    private static final String DEFAULT_CONFIG = "default.yaml";
+    private static final String PROPERTY_SOURCE_NAME = "openweathermap-starter-default";
 
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-        var resource = new ClassPathResource("default.yaml"); // определяем default.yaml как локальный
-        PropertySource<?> propertySource = null;
+        var resource = new ClassPathResource(DEFAULT_CONFIG);
 
-        try {
-            // и просим Yaml...Loader зачитать настройки из файла
-            propertySource = propertySourceLoader.load("openweathermap-starter", resource).get(0);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (!resource.exists()) {
+            log.debug("Default config not found: {}", DEFAULT_CONFIG);
+            return; // Молча пропускаем - нет конфига, нет проблем
         }
 
-        // прочитанные настройки проставляются в настройки окружения Spring’a
-        environment.getPropertySources().addLast(propertySource);
+        try {
+            new YamlPropertySourceLoader()
+                    .load(PROPERTY_SOURCE_NAME, resource)
+                    .forEach(propertySource -> {
+                        environment.getPropertySources().addLast(propertySource);
+                        log.debug("Loaded default configuration from {}", DEFAULT_CONFIG);
+                    });
+
+        } catch (IOException e) {
+            log.error("Failed to load default config from {}: {}", DEFAULT_CONFIG, e.getMessage(), e);
+        }
     }
 }
