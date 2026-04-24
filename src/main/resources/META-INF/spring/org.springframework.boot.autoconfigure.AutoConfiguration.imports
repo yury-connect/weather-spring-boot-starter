@@ -1,2 +1,2 @@
-# org.springframework.boot.autoconfigure.AutoConfiguration.imports
+# META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
 com.innowise.weather_spring_boot_starter.config.OpenWeatherMapAutoConfiguration

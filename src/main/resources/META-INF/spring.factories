@@ -1,2 +1,7 @@
-# spring.factories
-org.springframework.boot.env.EnvironmentPostProcessor=com.innowise.weather_spring_boot_starter.config.EnvPostProcessor
+# META-INF/spring.factories
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.innowise.weather_spring_boot_starter.config.OpenWeatherMapAutoConfiguration
+
+org.springframework.boot.env.EnvironmentPostProcessor=\
+com.innowise.weather_spring_boot_starter.config.EnvPostProcessor
