@@ -9,5 +9,4 @@ class WeatherSpringBootStarterApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }

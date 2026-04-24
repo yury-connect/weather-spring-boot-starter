@@ -12,16 +12,20 @@ weather-spring-boot-starter/
 │       │       │   ├── EnvPostProcessor.java
 │       │       │   ├── OpenWeatherMapAutoConfiguration.java
 │       │       │   └── OpenWeatherMapProperties.java
+│       │       │   
 │       │       ├── service/
 │       │       │   └── WeatherService.java
 │       │       └── WeatherSpringBootStarterApplication.java
+│       │      
 │       └── resources/
 │           ├── META-INF/
 │           │   ├── spring/
 │           │   │   └── org.springframework.boot.autoconfigure.AutoConfiguration.imports
 │           │   └── spring.factories
+│           │   
 │           ├── default.yaml  ← ВАЖНО! Правильное расположение
 │           └── application.properties
+│         
 └── pom.xml
 ```
-
+---

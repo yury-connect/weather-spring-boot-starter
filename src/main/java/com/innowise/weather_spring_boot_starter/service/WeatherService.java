@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 public class WeatherService {
 
     private static final Logger log = LoggerFactory.getLogger(WeatherService.class);
-
     private final String defaultCity;
     private final OpenWeatherMapClient client;
 

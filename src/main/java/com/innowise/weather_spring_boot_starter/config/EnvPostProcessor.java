@@ -19,7 +19,6 @@ public class EnvPostProcessor implements EnvironmentPostProcessor {
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
         var resource = new ClassPathResource(DEFAULT_CONFIG);
 
-        // Проверяем, существует ли файл
         if (!resource.exists()) {
             log.debug("Default config not found: {}", DEFAULT_CONFIG);
             return; // Молча пропускаем - нет конфига, нет проблем
@@ -34,7 +33,6 @@ public class EnvPostProcessor implements EnvironmentPostProcessor {
                     });
 
         } catch (IOException e) {
-            // Логируем предупреждение вместо выбрасывания исключения
             log.error("Failed to load default config from {}: {}", DEFAULT_CONFIG, e.getMessage(), e);
         }
     }

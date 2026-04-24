@@ -7,7 +7,6 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-<!--        <version>3.5.13</version>-->
         <version>3.2.4</version> <!-- Использую стабильную версию -->
         <relativePath/>
     </parent>
@@ -30,6 +29,7 @@
 
 
     <dependencies>
+
         <!-- Spring Boot Starter (обязательно для автоконфигурации) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

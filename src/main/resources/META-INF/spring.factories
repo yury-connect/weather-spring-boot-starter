@@ -1,4 +1,4 @@
-# META-INF/spring.factories
+# src/main/resources/META-INF/spring.factories
 
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.innowise.weather_spring_boot_starter.config.OpenWeatherMapAutoConfiguration

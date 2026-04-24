@@ -20,7 +20,6 @@ public class OpenWeatherMapAutoConfiguration {
     public WeatherService weatherService(OpenWeatherMapProperties properties) {
         log.info("Configuring WeatherService with city: {}", properties.getCity());
 
-        // Добавляем проверку на null на всякий случай
         if (properties.getSdkKey() == null || properties.getSdkKey().isBlank()) {
             throw new IllegalStateException("OpenWeatherMap SDK key must be configured");
         }
